@@ -5,6 +5,7 @@ const db = require("../Database/index");
 //adding client 
 module.exports = {
   addPatient: async (req, res) => {
+    try {
     let newPatient = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -13,7 +14,6 @@ module.exports = {
       phoneNumber: req.body.phoneNumber,
       adress: req.body.adress
     }
-    try {
       const patient = await db.Patients.create(newPatient);
       await patient.save();
       res.status(203).send(patient);
