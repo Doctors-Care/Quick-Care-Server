@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       disponibility: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: true,
       },
       adress: {
         type: DataTypes.STRING,
