@@ -13,7 +13,7 @@ const { getInformationsOfDoctor,addDoctor, loginDoc,updateDoctor} = require('../
 // // POST request for creating a new post.
 router.post('/addDoctor',addDoctor) ;
 // // post request for authentication.
-router.post("/login",loginDoc)
+router.post("/loginDoc",loginDoc)
 // // put request for updating informations.
 // router.put('/update/:id',updateDoctor) ; 
 // // get request for fetching informations.

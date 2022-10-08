@@ -48,8 +48,7 @@ module.exports = {
       };
       console.log(db.Doctors);
       
-      const Doctors = await db.Doctors.build(newDoctor);
-      await Doctors.save();
+      const Doctors = await db.Doctors.create(newDoctor);
       res.status(203).json({ Doctors });
     } catch (error) {
       console.log(error), res.status(555).send("you have error");
@@ -70,7 +69,7 @@ module.exports = {
       }
       );
       console.log(doctorAuth);
-      const Match =   bcrypt.compareSync(doctor.password, doctorAuth.dataValues.password);
+      const Match =   bcrypt.compareSync(doctor.password, doctorAuth.password);
       if (Match) {
         res.send({ message: 'welcome Back'})
       } else {

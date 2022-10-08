@@ -28,12 +28,12 @@ app.use("/ambulance",ambulanceRoute) ;
 
 
 
-const PORT =  3000 ;
 
 
 
 
 
-app.listen(PORT, function () {
-    console.log("Port 3000 is working");
+
+app.listen(process.env.PORT, function () {
+    console.log(" listening on Port 3000");
   });
