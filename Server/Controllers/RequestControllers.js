@@ -16,7 +16,7 @@ module.exports = {
                 patientId : requestidentif.id
             }
             const request = await db.requests.create(requestForm)
-            res.status(201).json(requestidentif)
+            res.status(201).json("Emergency !!")
         } catch (error) {
             console.log(error)
         }
