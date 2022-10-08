@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-db.sequelize.sync({force:true}).then(()=>console.log("t3adet")).catch((err)=>console.log(err))
+db.sequelize.sync().then(()=>console.log("t3adet")).catch((err)=>console.log(err))
 app.use(
   cors({
     origin: true,
