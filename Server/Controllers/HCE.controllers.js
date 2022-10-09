@@ -11,7 +11,7 @@ module.exports = {
            password: req.body.password,
            phoneNumber: req.body.phoneNumber,
            adress:req.body.adress,
-           license: req.body.license
+           licenseNumber: req.body.license
         }
         console.log(newHce);
         try {
