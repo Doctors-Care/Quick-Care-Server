@@ -10,8 +10,18 @@ const { Pool } = require('pg');
 
 var PORT = process.env.PORT || 3000
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+// db.sequelize.sync().then(()=>console.log("t3adet")).catch((err)=>console.log(err))
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || "postgres://qjwqawgrzeykbr:08328c1f33f551553717a146a1301391d8e703bb9999157e869ce1ca42c455ee@ec2-99-81-137-11.eu-west-1.compute.amazonaws.com:5432/dav98tes0eolbq",
+  connectionString: process.env.DATABASE_URL ,
   ssl: {
     rejectUnauthorized: false
   }
@@ -30,19 +40,8 @@ app.get('/db', async (req, res) => {
   }
 })
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
 
-// db.sequelize.sync().then(()=>console.log("t3adet")).catch((err)=>console.log(err))
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
 
 
 // app.use("/doctor",doctorRoutes) ;
