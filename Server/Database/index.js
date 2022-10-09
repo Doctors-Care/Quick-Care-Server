@@ -1,14 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const config = require('../../config.json');
 
 
-const sequelize = new Sequelize(config.database, config.user, config.password,
-    {
-      host: "localhost",
-      dialect: "mysql",
-      logging: false
-    }
-  );
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 
   const db = {};
   db.sequelize = sequelize;
@@ -20,12 +13,12 @@ const sequelize = new Sequelize(config.database, config.user, config.password,
   db.Hce = require("./models/hce.model")(sequelize, DataTypes);
   db.Doctors = require("./models/doctors.model")(sequelize, DataTypes);
   db.requests = require("./models/request.model")(sequelize,DataTypes)
-  
+
 db.Doctors.hasMany(db.requests, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE"
   });
-  db.requests.belongsTo(db.Doctors, { 
+  db.requests.belongsTo(db.Doctors, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE"
   });
@@ -33,7 +26,7 @@ db.Patients.hasMany(db.requests, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE"
   });
-  db.requests.belongsTo(db.Patients, { 
+  db.requests.belongsTo(db.Patients, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE"
   });
