@@ -30,12 +30,12 @@ app.use("/request",requestRoute)
 
 
 
-const PORT =  3000 ;
 
 
 
 
 
-app.listen(PORT, function () {
-    console.log("Port 3000 is working");
+
+app.listen(3000, function () {
+    console.log(" listening on Port 3000");
   });

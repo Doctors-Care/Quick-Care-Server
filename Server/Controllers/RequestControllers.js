@@ -16,7 +16,25 @@ module.exports = {
                 patientId : requestidentif.id
             }
             const request = await db.requests.create(requestForm)
-            res.status(201).json(requestidentif)
+            res.status(201).json(request)
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    actifRequest:async (req,res)=>{
+        try {
+            const requestId={
+                id :req.body.id,
+            }
+            const accepted = await db.requests.findOne({where:requestId})
+            
+            if(accepted.hceId==!null){
+                const HceAccept = await db.Hce.findOne({where:{id:accepted.hceId}})
+                res.status(201).json(HceAccept)
+            }
+            else {
+                res.status(202).json("waiting")
+            }
         } catch (error) {
             console.log(error)
         }
