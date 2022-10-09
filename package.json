@@ -4,7 +4,7 @@
   "description": "sport news",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node Server/index.js",
     "init": " node server/database/seed.js"
   },
   "repository": {
@@ -19,7 +19,7 @@
     "bcrypt": "^5.0.1",
     "bootstrap": "^5.2.1",
     "cloudinary": "^1.32.0",
-    "cors": "^2.8.5", 
+    "cors": "^2.8.5",
     "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
