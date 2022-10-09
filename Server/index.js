@@ -4,6 +4,7 @@ const hceRoutes = require ('./Routes/hce.Routes') ;
 const ambulanceRoute = require('./Routes/ambulance.routes');
 const requestRoute = require('./Routes/request.routes');
 const express = require("express");
+const db = require("./Database")
 const cors = require ('cors')
 const app = express();
 
