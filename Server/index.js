@@ -7,7 +7,7 @@ const db = require("./Database/index");
 const express = require("express");
 const cors = require ('cors')
 const app = express();
-
+var PORT = process.env.PORT || 3000
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 db.sequelize.sync().then(()=>console.log("t3adet")).catch((err)=>console.log(err))
@@ -36,6 +36,6 @@ app.use("/request",requestRoute)
 
 
 
-app.listen(3000, function () {
-    console.log(" listening on Port 3000");
+app.listen(PORT, function () {
+    console.log(` listening on Port ${PORT} `);
   });

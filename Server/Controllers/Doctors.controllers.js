@@ -46,12 +46,12 @@ module.exports = {
         disponibility: req.body.disponibility,
         image: req.body.image,
       };
-      console.log(db.Doctors);
+      
       
       const Doctors = await db.Doctors.create(newDoctor);
       res.status(203).json({ Doctors });
     } catch (error) {
-      console.log(error), res.status(555).send("you have error");
+       res.status(555).send("you have error");
     }
   },
   loginDoc : async (req,res) => {
@@ -60,7 +60,7 @@ module.exports = {
         email: req.body.email,
         password: req.body.password
       }
-      console.log(req.body.email);
+      
       const doctorAuth = await db.Doctors.findOne({
         where:
         {
@@ -68,7 +68,7 @@ module.exports = {
         }
       }
       );
-      console.log(doctorAuth);
+      
       const Match =   bcrypt.compareSync(doctor.password, doctorAuth.password);
       if (Match) {
         res.send({ message: 'welcome Back'})
@@ -77,7 +77,7 @@ module.exports = {
       }
     }
     catch (err) {
-        console.log(err)
+        
       res.status(401).send(err)
     }
   }
