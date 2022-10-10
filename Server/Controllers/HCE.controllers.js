@@ -10,8 +10,8 @@ module.exports = {
            email: req.body.email,
            password: bcrypt.hashSync(req.body.password,10),
            phoneNumber: req.body.phoneNumber,
-           address:req.body.address,
-           licenseNumber: req.body.licenseNumber
+           adress:req.body.adress,
+           licenseNumber: req.body.license
         }
         console.log(newHce);
         try {
