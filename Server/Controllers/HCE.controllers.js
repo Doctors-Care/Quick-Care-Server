@@ -1,6 +1,6 @@
 //Controller related to Admin ressource.
 const db = require("../Database/index");
-
+const bcrypt = require("bcrypt")
 
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
         let newHce = {
            name: req.body.name,
            email: req.body.email,
-           password: req.body.password,
+           password: bcrypt.hashSync(req.body.password,10),
            phoneNumber: req.body.phoneNumber,
            address:req.body.address,
            licenseNumber: req.body.licenseNumber
@@ -24,7 +24,9 @@ module.exports = {
           let filter = {
             email: req.body.email
           }
+          console.log(req.body);
           const Hce = await db.Hce.findOne({ where: filter })
+          console.log(Hce);
           if (!Hce) {
             return res.status(401).send("check you email address")
           }
@@ -36,7 +38,6 @@ module.exports = {
           res.status(200).send("allowed")
         
         } catch (error) {
-          console.log(error)
           res.status(400).send(error)
         }
           }
