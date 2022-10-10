@@ -14,8 +14,7 @@ const router = express.Router() ;
 // /// POSTS ROUTES /// 
 // // post request to authenticate HCE
 router.post("/signin",hceAuthentification)
-// // POST request for creating a new post.
-
+router.post("/add",addHce)
 // //UPDATE request to update  
 // router.put('/update/:id',updateHce) ; 
 // // get request for fetching informations.
