@@ -9,5 +9,5 @@ router.post("/signin",patientAuthentification)
 // //UPDATE request to update.
 // router.put('/update/:id',updatePatient) ; 
 // // get request for fetching informations.
-// router.get('/getOne/:id', getInformationsOfPatient );
+router.get('/getOne/:id', getInformationsOfPatient );
 module.exports = router;
