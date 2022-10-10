@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
 
-const sequelize = new Sequelize(process.env.DATABASE_URL || "postgres://qjwqawgrzeykbr:08328c1f33f551553717a146a1301391d8e703bb9999157e869ce1ca42c455ee@ec2-99-81-137-11.eu-west-1.compute.amazonaws.com:5432/dav98tes0eolbq",{ dialectOptions:{ssl: {
+const sequelize = new Sequelize(process.env.DATABASE_URL || "postgres://dnknoztmmekhbp:f6f05066854de06cefcdf473a221564e335fa87fe3c21248a3e4c742e2ecd25c@ec2-52-208-164-5.eu-west-1.compute.amazonaws.com:5432/ddvlmd6cv9tfa2",{ dialectOptions:{ssl: {
     rejectUnauthorized: false
   }}})
 
