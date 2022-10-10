@@ -41,7 +41,7 @@ try {
   res.status(400).send("Somthing went wrong")
 }
   },
-  findHceReq: async (req, res) => {
+  getInformationsOfPatient: async (req, res) => {
 
     try { 
         const getPatientInfo = await db.requests.findOne({where:{id:req.params.patientId}})
