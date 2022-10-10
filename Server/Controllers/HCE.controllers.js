@@ -1,4 +1,4 @@
-//Controller related to Admin ressource.
+//Controller related to HCE ressource.
 const db = require("../Database/index");
 const bcrypt = require("bcrypt")
 
