@@ -48,6 +48,6 @@ try {
         console.log(getPatientInfo)
         res.status(222).json(getPatientInfo);
     }
-    catch (error) {  res.status(530).send('you have error')}
+    catch (error) {  res.status(530).send(error)}
 } 
 };
