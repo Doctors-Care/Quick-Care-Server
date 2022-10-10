@@ -42,9 +42,9 @@ try {
 }
   },
   getInformationsOfPatient: async (req, res) => {
-
+console.log(req.params.id);
     try { 
-        const getPatientInfo = await db.requests.findOne({where:{id:req.params.id}})
+        const getPatientInfo = await db.Patients.findOne({where:{id:req.params.id}})
         console.log(getPatientInfo)
         res.status(222).json(getPatientInfo);
     }
