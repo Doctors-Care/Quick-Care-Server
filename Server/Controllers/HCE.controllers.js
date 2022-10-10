@@ -19,4 +19,26 @@ module.exports = {
             res.status(203).send(hce);
         }catch (error){res.status(555).send(error)}
     },
+    hceAuthentification: async (req, res) => {
+        try {
+          let filter = {
+            email: req.body.email
+          }
+          const Hce = await db.Hce.findOne({ where: filter })
+          if (!Hce) {
+            return res.status(401).send("check you email address")
+          }
+          const Valid = bcrypt.compareSync(req.body.password, Hce.password)
+          if (!Valid) {
+            return res.status(402).send("wrong password")
+          }
+        
+          res.status(200).send("allowed")
+        
+        } catch (error) {
+          console.log(error)
+          res.status(400).send("not allowed")
+        }
+          }
+        
 }
