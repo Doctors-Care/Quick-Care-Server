@@ -40,5 +40,17 @@ try {
   console.log(error)
   res.status(400).send("Somthing went wrong")
 }
+  },
+  gettingPatient: async (req, res) => {
+try {
+  let filter = {
+    email: req.body.email
+  }
+  const Patient = await db.Patients.findOne({ where: filter })
+  res.status(200).json(Patient)
+} catch (error) {
+  console.log(error)
+  res.status(400).send("error")
+}
   }
 };
