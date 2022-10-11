@@ -55,5 +55,18 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
+    },
+    findHceReq: async (req, res) => {
+        try { 
+            const requestHCE = await db.requests.findAll({where:{status:"HCE"}})
+            console.log(requestHCE)
+            res.status(222).json(requestHCE);
+        }
+        catch (error) {  res.status(530).send('you have error')}
+    },
+//     validationHce: async(req, res)=>{
+// try{
+// let validation =  
+// }
+//     }
     }
-}
