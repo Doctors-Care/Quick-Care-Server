@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: true}));
 db.sequelize.sync().then(()=>console.log("t3adet")).catch((err)=>console.log(err))
 app.use(
   cors({
-    origin: true,
+    origin: "*",
     credentials: true,
   })
 );
