@@ -21,6 +21,23 @@ module.exports = {
             console.log(error)
         }
     },
+
+
+    getAllRequests: async (req, res) => {
+        try {
+            
+            const requests = await db.requests.findAll({ where: { status: "Doctor" } })
+            res.status(200).json(requests)
+        } catch (error) {
+            console.log(error)
+            res.status(500).json(error)
+        }
+    },
+
+
+
+
+
     actifRequest:async (req,res)=>{
         try {
             const requestId={

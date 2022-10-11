@@ -18,6 +18,6 @@ module.exports = {
     }catch (error){res.status(555).send('you have error')}
 },
 };
+
   //method to add a post to the database via the respective model function.
-  
 
