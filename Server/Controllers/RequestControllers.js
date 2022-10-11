@@ -46,5 +46,10 @@ module.exports = {
             res.status(222).json(requestHCE);
         }
         catch (error) {  res.status(530).send('you have error')}
-    } 
+    },
+//     validationHce: async(req, res)=>{
+// try{
+// let validation =  
+// }
+//     }
     }

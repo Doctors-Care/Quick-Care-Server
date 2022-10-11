@@ -40,6 +40,18 @@ module.exports = {
         } catch (error) {
           res.status(400).send(error)
         }
-          }
+          },
+          gettingOneHce: async (req, res) => {
+            try {
+              let filter = {
+                email: req.body.email
+              }
+              const Hce = await db.Hce.findOne({ where: filter })
+              res.status(200).json(Hce)
+            } catch (error) {
+              console.log(error)
+              res.status(400).send("error")
+            }
+              }
         
 }
