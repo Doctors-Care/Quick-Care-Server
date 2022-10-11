@@ -1,10 +1,16 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../../config.json")
 
-const sequelize = new Sequelize(process.env.DATABASE_URL || "postgres://cmqgawgbklnnsd:c2291a77d529f95476a7bf3d9ac48453d1eb0a453b10b75177a2c97889ba65a3@ec2-54-75-184-144.eu-west-1.compute.amazonaws.com:5432/d114u8m9u02ru7",{ dialectOptions:{ssl: {
-    rejectUnauthorized: false
-  }}})
-
+// const sequelize = new Sequelize(process.env.DATABASE_URL || "postgres://lxysmkhoieuclr:639588451789e1e6d736a2962f6ef41a363dacad34c6ef54c2c3ba8e27875437@ec2-54-75-184-144.eu-west-1.compute.amazonaws.com:5432/d9hln4u4bbmm6n",{ dialectOptions:{ssl: {
+//     rejectUnauthorized: false
+//   }}})
+const sequelize = new Sequelize(config.database, config.user, config.password,
+  {
+    host: "localhost",
+    dialect: "mysql",
+    logging: false
+  }
+);
   const db = {};
   db.sequelize = sequelize;
   db.sequelize = sequelize;
