@@ -41,6 +41,7 @@ try {
   res.status(400).send("Somthing went wrong")
 }
   },
+  
   gettingPatient: async (req, res) => {
 try {
   let filter = {
