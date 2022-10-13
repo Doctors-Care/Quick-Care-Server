@@ -18,9 +18,28 @@ module.exports = {
             const request = await db.requests.create(requestForm)
             res.status(201).json(request)
         } catch (error) {
+            
             console.log(error)
+            res.status(500).json(error)
         }
     },
+
+
+    getAllRequests: async (req, res) => {
+        try {
+            
+            const requests = await db.requests.findAll({ where: { status: "Doctor" } })
+            res.status(200).json(requests)
+        } catch (error) {
+            console.log(error)
+            res.status(501).json(error)
+        }
+    },
+
+
+
+
+
     actifRequest:async (req,res)=>{
         try {
             const requestId={
@@ -37,6 +56,20 @@ module.exports = {
             }
         } catch (error) {
             console.log(error)
+            res.status(500).json(error)
         }
+    },
+    findHceReq: async (req, res) => {
+        try { 
+            const requestHCE = await db.requests.findAll({where:{status:"HCE"}})
+            console.log(requestHCE)
+            res.status(222).json(requestHCE);
+        }
+        catch (error) {  res.status(530).json('you have error')}
+    },
+//     validationHce: async(req, res)=>{
+// try{
+// let validation =  
+// }
+//     }
     }
-}
