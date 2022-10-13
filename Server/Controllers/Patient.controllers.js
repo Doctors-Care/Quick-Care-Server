@@ -34,7 +34,7 @@ try {
     return res.status(402).send("wrong password")
   }
 
-  res.status(200).send("ok")
+  res.status(200).send(Patient)
 
 } catch (error) {
   console.log(error)
