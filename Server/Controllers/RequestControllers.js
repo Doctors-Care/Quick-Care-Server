@@ -18,6 +18,7 @@ module.exports = {
             const request = await db.requests.create(requestForm)
             res.status(201).json(request)
         } catch (error) {
+            
             console.log(error)
             res.status(500).json(error)
         }
