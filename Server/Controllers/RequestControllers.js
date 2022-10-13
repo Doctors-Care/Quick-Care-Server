@@ -20,9 +20,26 @@ module.exports = {
         } catch (error) {
             
             console.log(error)
-            res.status(400).json("error")
+            res.status(500).json(error)
         }
     },
+
+
+    getAllRequests: async (req, res) => {
+        try {
+            
+            const requests = await db.requests.findAll({ where: { status: "Doctor" } })
+            res.status(200).json(requests)
+        } catch (error) {
+            console.log(error)
+            res.status(501).json(error)
+        }
+    },
+
+
+
+
+
     actifRequest:async (req,res)=>{
         try {
             const requestId={
@@ -39,6 +56,7 @@ module.exports = {
             }
         } catch (error) {
             console.log(error)
+            res.status(500).json(error)
         }
     },
     findHceReq: async (req, res) => {
@@ -47,7 +65,7 @@ module.exports = {
             console.log(requestHCE)
             res.status(222).json(requestHCE);
         }
-        catch (error) {  res.status(530).send('you have error')}
+        catch (error) {  res.status(530).json('you have error')}
     },
 //     validationHce: async(req, res)=>{
 // try{
