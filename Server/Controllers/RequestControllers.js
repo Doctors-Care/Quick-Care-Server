@@ -56,11 +56,12 @@ module.exports = {
     },
     findHceReq: async (req, res) => {
         try {
-            const requestHCE = await db.requests.findAll({ where: { status: "HCE" } })
+            const requestHCE = await db.requests.findAll({ where: { status: "HCE" },include: [
+                { model: db.Patients, attributes: ["firstName","lastName","adress"] }] })
             console.log(requestHCE)
             res.status(222).json(requestHCE);
         }
-        catch (error) {  res.status(530).send('you have error')}
+        catch (error) { console.log(error); res.status(530).send("you have an error")}
     },
     //     validationHce: async(req, res)=>{
     // // try{

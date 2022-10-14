@@ -13,7 +13,7 @@ var PORT = process.env.PORT || 3000
 db.sequelize.sync().then(()=>console.log("t3adet")).catch((err)=>console.log(err))
 app.use(
   cors({
-    origin:"https://quick-care-server.herokuapp.com",
+    origin:true,
     credentials: true,
   })
   );
