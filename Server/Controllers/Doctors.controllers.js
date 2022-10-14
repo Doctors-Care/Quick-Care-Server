@@ -51,7 +51,7 @@ module.exports = {
       const Doctors = await db.Doctors.create(newDoctor);
       res.status(203).json({ Doctors });
     } catch (error) {
-       res.status(555).send("you have error");
+       res.status(555).send(error);
     }
   },
   loginDoc : async (req,res) => {
