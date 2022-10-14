@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    activationCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   });
 
   return Hce;
