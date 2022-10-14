@@ -5,7 +5,7 @@ const router = express.Router() ;
 
 
 // // Require controller modules.
-const { getInformationsOfDoctor,addDoctor, loginDoc,updateDoctor} = require('../Controllers/Doctors.controllers')
+const { getInformationsOfDoctor,addDoctor, loginDoc,updateDoctor , getOneDoc,updateDocProfile} = require('../Controllers/Doctors.controllers')
 
 
 // /// POSTS ROUTES ///
@@ -15,9 +15,9 @@ router.post('/addDoctor',addDoctor) ;
 // // post request for authentication.
 router.post("/loginDoc",loginDoc)
 // // put request for updating informations.
-// router.put('/update/:id',updateDoctor) ; 
+router.put('/update',updateDocProfile) ; 
 // // get request for fetching informations.
-// router.get('/getOne/:id', getInformationsOfDoctor );
+router.post('/getOne',getOneDoc);
 
 
 
