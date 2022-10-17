@@ -47,7 +47,7 @@ module.exports = {
             }
             const accepted = await db.requests.findOne({where:requestId})
             
-            if(accepted.hceId==!null){
+            if(accepted.hceId!==null){
                 const HceAccept = await db.Hce.findOne({where:{id:accepted.hceId}})
                 res.status(201).json(HceAccept)
             }
@@ -67,6 +67,28 @@ module.exports = {
         }
         catch (error) {  res.status(530).json('you have error')}
     },
+    actifDocRequest:async(req,res)=>{
+        try {
+            const requestId={
+                id :req.body.id,
+            }
+            const accepted = await db.requests.findOne({where:requestId})
+            
+            if(accepted.DoctorId!==null){
+                const DoctorAccept = await db.Doctors.findOne({where:{id:accepted.DoctorId}})
+                res.status(201).json(DoctorAccept)
+            }
+            else {
+                res.status(202).json("waiting")
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(500).json(error)
+        }
+    },
+
+
+
 //     validationHce: async(req, res)=>{
 // try{
 // let validation =  
