@@ -7,8 +7,8 @@ const transport = nodemailer.createTransport({
   port: 587,
   secure: false,
     auth:{
-        user : "quickcarec4@gmail.com",
-        pass:"mrdyqidfwmkpevcd"
+        user : "quickcarec422@gmail.com",
+        pass:"zmmkqyslmsditobs"
     }
 });
 module.exports.sendConfirmationMail =(email, code)=>{

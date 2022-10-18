@@ -11,4 +11,5 @@ router.put("/putDoctorId",takeInCharge)
 router.get("/getAllOKRequests",getAllOKRequests)
 
 
+router.post("/checkDocRequest",actifDocRequest)
 module.exports = router;
