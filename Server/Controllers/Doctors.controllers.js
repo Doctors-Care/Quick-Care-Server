@@ -51,7 +51,7 @@ module.exports = {
       const Doctors = await db.Doctors.create(newDoctor);
       res.status(203).json({ Doctors });
     } catch (error) {
-       res.status(555).send("you have error");
+       res.status(555).send(error);
     }
   },
   loginDoc : async (req,res) => {
@@ -71,13 +71,59 @@ module.exports = {
       
       const Match =   bcrypt.compareSync(doctor.password, doctorAuth.password);
       if (Match) {
-        res.send({ message: 'welcome Back'})
+        res.status(202).json({doctorAuth})
       } else {
-        res.send({ message: 'verify your credentials' });
+        res.status(202).json({ message: 'verify your credentials' });
       }
     }
     catch (err) {
         
+      res.status(401).send(err)
+    }
+  },
+
+  getOneDoc : async (req,res) => {
+    try {
+      // const doctor = {
+      //   id: req.body.id
+      // }
+      // console.log(doctor);
+      const doctorAuth = await db.Doctors.findOne({
+        where:{id:req.body.id}
+      }
+      );
+      console.log(doctorAuth);
+      res.status(202).json(doctorAuth)
+
+    }
+    catch (err) {
+        console.log(err)
+      res.status(401).send(err)
+    }
+  },
+  updateDocProfile : async (req,res) => {
+    try {
+       const oneDoc = await  db.Doctors.findOne({
+        where:{id:req.body.id}})
+      
+      const doctor = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        licenseNumber: req.body.licenseNumber,
+        adress: req.body.adress,
+        disponibility: req.body.disponibility,
+      }
+      const doctorAuth = await db.Doctors.update(doctor,{
+        where:{id:req.body.id}
+      }
+      );
+      res.status(202).json(doctor)
+
+    }
+    catch (err) {
+        console.log(err)
       res.status(401).send(err)
     }
   }

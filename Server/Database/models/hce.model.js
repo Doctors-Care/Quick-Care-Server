@@ -22,7 +22,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    address: {
+    adress: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    activationCode: {
       type: DataTypes.STRING,
       allowNull: false,
     },

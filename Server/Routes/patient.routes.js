@@ -1,13 +1,15 @@
 const express = require("express") ;
 const router = express.Router() ;
 
-const  { getInformationsOfPatient,addPatient , patientAuthentification,gettingPatient,UpdatePatient }=require("../Controllers/Patient.controllers")
+const  { getInformationsOfPatient,addPatient , patientAuthentification,gettingPatient,UpdatePatient,verifyCode }=require("../Controllers/Patient.controllers")
 //authentification routes
 
 //post request to add a patient.
 router.post("/signup",addPatient)
 //post request to authenticate patient.
 router.post("/signin",patientAuthentification)
+//check verification code 
+router.post("/verify",verifyCode)
 //post request to get user info
 router.post("/One",gettingPatient)
 
@@ -23,5 +25,5 @@ router.put("/updateAll",UpdatePatient)
 
 // router.put('/update/:id',updatePatient) ; 
 // // get request for fetching informations.
-// router.get('/getOne/:id', getInformationsOfPatient );
+router.get('/getOne/:id', getInformationsOfPatient );
 module.exports = router;

@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
       image: {
         type: DataTypes.STRING,
       },
+        activationCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     });
   
     return Patient;
