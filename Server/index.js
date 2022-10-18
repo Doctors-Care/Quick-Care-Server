@@ -11,15 +11,15 @@ const app = express();
 var PORT = process.env.PORT || 3000
 
 db.sequelize.sync().then(()=>console.log("t3adet")).catch((err)=>console.log(err))
+app.use(
+  cors({
+    origin:true,
+    credentials: true,
+  })
+  );
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
 
 app.use("/doctor",doctorRoutes) ;
 app.use("/user",patientRoutes) ;
