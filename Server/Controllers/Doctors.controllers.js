@@ -73,7 +73,7 @@ module.exports = {
       if (Match) {
         res.status(202).json({doctorAuth})
       } else {
-        res.status(400).json({ message: 'verify your credentials' });
+        res.status(202).json({ message: 'verify your credentials' });
       }
     }
     catch (err) {
@@ -110,8 +110,7 @@ module.exports = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password : req.body.password,
-        phoneNumber:bcrypt.hashSync(req.body.phoneNumber),
+        phoneNumber: req.body.phoneNumber,
         licenseNumber: req.body.licenseNumber,
         adress: req.body.adress,
         disponibility: req.body.disponibility,

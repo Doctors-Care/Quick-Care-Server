@@ -1,7 +1,9 @@
 // Define and export the sequelize model that represents the table doctors.
 
 module.exports = (sequelize, DataTypes) => {
-    const Doctors = sequelize.define("Doctors", {
+  const Doctors = sequelize.define(
+    "Doctors",
+    {
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -38,12 +40,11 @@ module.exports = (sequelize, DataTypes) => {
       image: {
         type: DataTypes.STRING,
       },
-
     },
     {
-      tableName: "Doctors"
-    },);
-  
-    return Doctors;
-  };
-  
+      tableName: "Doctors",
+    }
+  );
+
+  return Doctors;
+};
