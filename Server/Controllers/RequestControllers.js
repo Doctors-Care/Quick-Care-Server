@@ -116,6 +116,7 @@ module.exports = {
         where: req.body.id,
       });
       request.DoctorId=req.body.doctorId
+      request.TreatedORNot=true
       await request.save()
       res.status(201).json(request);
     } catch (err) {
@@ -123,4 +124,15 @@ module.exports = {
       res.status(501).json(err);
     }
   },
+
+// doctorCallHce : async (req,res)=>{
+//  try {
+//   cons
+//  } catch (error) {
+  
+//  }
+
+
+// }
+
 };

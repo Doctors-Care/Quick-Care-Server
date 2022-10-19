@@ -51,7 +51,7 @@ module.exports = {
       const Doctors = await db.Doctors.create(newDoctor);
       res.status(203).json({ Doctors });
     } catch (error) {
-       res.status(555).send("you have error");
+       res.status(555).send(error);
     }
   },
   loginDoc : async (req,res) => {
@@ -73,7 +73,7 @@ module.exports = {
       if (Match) {
         res.status(202).json({doctorAuth})
       } else {
-        res.status(400).json({ message: 'verify your credentials' });
+        res.status(202).json({ message: 'verify your credentials' });
       }
     }
     catch (err) {
