@@ -120,6 +120,22 @@ module.exports = {
     }
   },
 
+  expoNotification:async(req,res)=>{
+    try {
+      let filter = {
+        email: req.body.email,
+      };
+
+      const Patient = await db.Patients.findOne({ where: filter });
+      const change = await Patient.update(req.body);
+      res.status(201).json(change);
+    } catch (error) {
+      console.log(error);
+      res.status(401).json("failed");
+    }
+  },
+  
+
   //update last name
   // UpdateLastName:async(req,res)=>{
   //   try {
