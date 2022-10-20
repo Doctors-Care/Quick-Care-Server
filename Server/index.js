@@ -3,11 +3,12 @@ const patientRoutes = require ('./Routes/patient.routes') ;
 const hceRoutes = require ('./Routes/hce.Routes') ;
 const ambulanceRoute = require('./Routes/ambulance.routes');
 const requestRoute = require('./Routes/request.routes');
+const cookieParser = require('cookie-parser');
 const express = require("express");
 const db = require("./Database")
 const cors = require ('cors')
 const app = express();
-
+app.use(cookieParser());
 var PORT = process.env.PORT || 3000
 
 db.sequelize.sync().then(()=>console.log("t3adet")).catch((err)=>console.log(err))
