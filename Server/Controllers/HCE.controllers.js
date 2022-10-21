@@ -34,7 +34,7 @@ module.exports = {
       console.log(nodemailerResponse);
 
       const hce = await db.Hce.create(newHce);
-      res.status(203).send(hce);
+      res.status(203).send("registred");
     } catch (error) {
       console.log("catch block");
       console.log(error);
@@ -43,9 +43,9 @@ module.exports = {
   },
   verifyCode: async (req, res) => {
     try {
-      let filter = { id: req.body.id };
+      let filter = { activationCode: req.body.activationCode };
       const hce = await db.Hce.findOne({ where: filter });
-      if (hce.activationCode === req.body.code) {
+      if (hce) {
         return res.status(200).send("allowed");
       }
       res.status(402).send("wrong code");

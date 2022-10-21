@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.STRING,
-      
+        
       },
       TreatedORNot : {
         type : DataTypes.BOOLEAN
