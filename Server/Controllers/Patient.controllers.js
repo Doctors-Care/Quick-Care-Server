@@ -1,8 +1,11 @@
 const bcrypt = require("bcrypt");
 const { sendConfirmationMail } = require("./nodemailer");
+
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
+const { sendNotification } =require("./Notification")
+
 
 //Controller related to users ressource for login And signUp.
 const db = require("../Database/index");
@@ -87,6 +90,9 @@ module.exports = {
         });
         res.status(200).send({ message: "welcome back", Patient, token });
       }
+      sendNotification(Patient.NotifToken)
+      res.status(200).send(Patient);
+
     } catch (error) {
       console.log(error);
       res.status(400).send("Somthing went wrong");
@@ -132,6 +138,22 @@ module.exports = {
       res.status(401).json("failed");
     }
   },
+
+  expoNotification:async(req,res)=>{
+    try {
+      let filter = {
+        email: req.body.email,
+      };
+
+      const Patient = await db.Patients.findOne({ where: filter });
+      const change = await Patient.update(req.body);
+      res.status(201).json(change);
+    } catch (error) {
+      console.log(error);
+      res.status(401).json("failed");
+    }
+  },
+  
 
   //update last name
   // UpdateLastName:async(req,res)=>{
