@@ -1,12 +1,14 @@
 const bcrypt = require("bcrypt");
 const { sendConfirmationMail } = require("./nodemailer");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
 //Controller related to users ressource for login And signUp.
 const db = require("../Database/index");
 //adding client
 module.exports = {
-
-//adding patient to the database
+  //adding patient to the database
 
   addPatient: async (req, res) => {
     try {
@@ -29,15 +31,16 @@ module.exports = {
         activationCode: activationCode,
       };
       // sending validation code via node mailer
-            const nodemailer = await sendConfirmationMail(
-              newPatient.email,
-              activationCode
-            );
-            console.log("nodemailer",nodemailer);
+      const nodemailer = await sendConfirmationMail(
+        newPatient.email,
+        activationCode
+      );
+      console.log("nodemailer", nodemailer);
       //creating the profile for patient
       const patient = await db.Patients.create(newPatient);
-      res.status(203).send(patient)} 
-    catch (error) {console.log(error);
+      res.status(203).send(patient);
+    } catch (error) {
+      console.log(error);
       res.status(400).send("you have error");
     }
   },
@@ -66,14 +69,24 @@ module.exports = {
       };
       const Patient = await db.Patients.findOne({ where: filter });
       if (!Patient) {
-        return res.status(401).send("user not found check your email");
+        res.status(401).send("user not found check your email");
       }
       const Valid = bcrypt.compareSync(req.body.password, Patient.password);
       if (!Valid) {
-        return res.status(402).send("wrong password");
+        res.status(402).send("wrong password");
+      } else {
+        const exp = Date.now() + 1000 * 60 * 60;
+        const token = jwt.sign(
+          { sub: Patient.id, exp },
+          process.env.SECRET_KEY
+        );
+        res.cookie("Authorization", token, {
+          expires: new Date(exp),
+          httpOnly: true,
+          sameSite: "lax",
+        });
+        res.status(200).send({ message: "welcome back", Patient, token });
       }
-
-      res.status(200).send(Patient);
     } catch (error) {
       console.log(error);
       res.status(400).send("Somthing went wrong");
