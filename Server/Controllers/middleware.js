@@ -12,7 +12,7 @@ async function requireAuhDoc(req, res, next) {
     const doctor = await db.Doctors.findByPk(decoded.sub);
 
     if (Date.now() > decoded.exp) {
-      return res.status(401).json("token expired");
+      return res.status(400).json("token expired");
     }
 
     if (!doctor) {
@@ -23,8 +23,28 @@ async function requireAuhDoc(req, res, next) {
     }
   } catch (error) {
     console.log(error);
-    res.status(401).json("unauthorized");
+    res.status(403).json("unauthorized");
   }
 }
 
-module.exports = requireAuhDoc;
+async function requireAuthPat(req,res,next){
+  try {
+   const token = req.cookies.Authorization;
+   const decoded = jwt.verify(token,process.env.SECRET_KEY);
+   const patient = await db.Patients.findByPk(decoded.sub);
+   if (Date.now()> decoded.exp){
+    return res.status(400).json("session expired");
+   } 
+   if (!patient){
+   return res.status(401).json("user does not exist") ;
+   }
+   else req.patient=patient;
+   next();
+
+  } catch (error) {
+    console.log(error);
+    res.status(403).json("unauthorized")
+  }
+} 
+
+module.exports = requireAuhDoc,requireAuthPat;
