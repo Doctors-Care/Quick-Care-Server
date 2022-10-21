@@ -3,6 +3,7 @@ const patientRoutes = require ('./Routes/patient.routes') ;
 const hceRoutes = require ('./Routes/hce.Routes') ;
 const ambulanceRoute = require('./Routes/ambulance.routes');
 const requestRoute = require('./Routes/request.routes');
+const cookieParser = require('cookie-parser');
 const express = require("express");
 const db = require("./Database")
 const cors = require ('cors')
@@ -10,8 +11,10 @@ const app = express();
 const http = require ("http")
 const {Server} = require ("socket.io");
 
-var PORT = process.env.PORT || 3001
+app.use(cookieParser());
 
+
+var PORT = process.env.PORT || 3001
 
 const server = http.createServer(app);
 

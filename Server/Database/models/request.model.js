@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         
       },
+      TreatedORNot : {
+        type : DataTypes.BOOLEAN
+      },
     });
   
     return Request;
