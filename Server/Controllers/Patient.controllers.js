@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const { sendConfirmationMail } = require("./nodemailer");
+const { sendNotification } =require("./Notification")
 
 //Controller related to users ressource for login And signUp.
 const db = require("../Database/index");
@@ -72,7 +73,7 @@ module.exports = {
       if (!Valid) {
         return res.status(402).send("wrong password");
       }
-
+      sendNotification(Patient.NotifToken)
       res.status(200).send(Patient);
     } catch (error) {
       console.log(error);

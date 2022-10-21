@@ -1,7 +1,7 @@
 {
-  "name": "sport-news-project",
+  "name": "quick-care-server",
   "version": "1.0.0",
-  "description": "sport news",
+  "description": "Quick Care",
   "main": "index.js",
   "scripts": {
     "deploy": "git push heroku head:master",

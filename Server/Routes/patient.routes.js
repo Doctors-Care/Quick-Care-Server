@@ -22,7 +22,7 @@ router.post("/verify", verifyCode);
 router.post("/One", gettingPatient);
 
 //adding pushNotification token
-router.post("/addTokenNotif", expoNotification);
+router.put("/addTokenNotif", expoNotification);
 
 
 //UPDATE Patient

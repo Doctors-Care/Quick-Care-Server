@@ -17,14 +17,18 @@ module.exports.sendNotification = (pushToken) => {
   });
   let chunk = expo.chunkPushNotifications(message);
   let ticket = [];
-  for (let chunks of chunk) {
-    try {
-      let ticketChunk = expo.sendPushNotificationsAsync(chunks);
-      console.log(ticketChunk);
+  (async () => {
+    for (let chunks of chunk) {
+     try {
+      let ticketChunk = await expo.sendPushNotificationsAsync(chunks);
       ticket.push(...ticketChunk);
-    } catch (err) {
-      console.log(err);
+      console.log("ticketChunk: ", ticketChunk);
+   
+     } catch (error) {
+      console.error(error);
+     }
     }
-  }
+   })();
   console.log(chunk);
+  
 };
