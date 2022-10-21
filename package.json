@@ -33,7 +33,8 @@
     "nodemailer": "^6.8.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.15.0"
+    "sequelize": "^6.15.0",
+    "socket.io": "^4.5.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
