@@ -1,6 +1,7 @@
 
 const express = require("express") ;
 const router = express.Router() ;
+const requireAuthHce = require("../Controllers/middleware")
 
 
 
@@ -17,7 +18,7 @@ router.post("/signin",hceAuthentification)
 router.post("/add",addHce)
 // //UPDATE request to update  
 // router.put('/update/:id',updateHce) ; 
-router.post("/getOne",gettingOneHce)
+router.post("/getOne", requireAuthHce, gettingOneHce)
 
 
 

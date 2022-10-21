@@ -27,24 +27,42 @@ async function requireAuhDoc(req, res, next) {
   }
 }
 
-async function requireAuthPat(req,res,next){
+async function requireAuthPat(req, res, next) {
   try {
-   const token = req.cookies.Authorization;
-   const decoded = jwt.verify(token,process.env.SECRET_KEY);
-   const patient = await db.Patients.findByPk(decoded.sub);
-   if (Date.now()> decoded.exp){
-    return res.status(400).json("session expired");
-   } 
-   if (!patient){
-   return res.status(401).json("user does not exist") ;
-   }
-   else req.patient=patient;
-   next();
-
+    const token = req.cookies.Authorization;
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const patient = await db.Patients.findByPk(decoded.sub);
+    if (Date.now() > decoded.exp) {
+      return res.status(400).json("session expired");
+    }
+    if (!patient) {
+      return res.status(401).json("user does not exist");
+    } else req.patient = patient;
+    next();
   } catch (error) {
     console.log(error);
-    res.status(403).json("unauthorized")
+    res.status(403).json("unauthorized");
   }
-} 
+}
 
-module.exports = requireAuhDoc,requireAuthPat;
+async function requireAuthHce(req, res, next) {
+  try {
+    const token = req.cookies.Authorization;
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const hce = db.Hce.findByPk(decoded.sub);
+    if (Date.now > decoded.exp) {
+      return res.status(400).json("session expired");
+    }
+    if (!hce) {
+      return res.status(401).json("hce does not exist");
+    } else {
+      req.hce = hce;
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(403).json("unauthorized");
+  }
+}
+
+module.exports = requireAuhDoc, requireAuthPat , requireAuthHce;
