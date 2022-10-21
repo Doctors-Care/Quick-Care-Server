@@ -1,5 +1,6 @@
 const { request } = require("express");
 const db = require("../Database/index");
+const { sendNotification } = require("./Notification");
 
 module.exports = {
   addRequest: async (req, res) => {
@@ -58,6 +59,10 @@ module.exports = {
         const HceAccept = await db.Hce.findOne({
           where: { id: accepted.hceId },
         });
+        const Patient = await db.Patients.findOne({
+          where : {id :accepted.patientId}
+        })
+        sendNotification(Patient.NotifToken)
         res.status(201).json(HceAccept);
       } else {
         res.status(202).json("waiting");
@@ -116,8 +121,14 @@ module.exports = {
         where: req.body.id,
       });
       request.DoctorId=req.body.doctorId
-      request.TreatedORNot=true
+      request.TreatedORNot=true;
       await request.save()
+      const Patient = await db.Patients.findOne({
+        where : {id :request.patientId}
+      })
+      console.log(Patient)
+      sendNotification(Patient.NotifToken)
+      
       res.status(201).json(request);
     } catch (err) {
       console.log(err);

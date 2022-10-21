@@ -1,29 +1,36 @@
-const express = require("express") ;
-const router = express.Router() ;
+const express = require("express");
+const router = express.Router();
 
-const  { getInformationsOfPatient,addPatient , patientAuthentification,gettingPatient,UpdatePatient,verifyCode }=require("../Controllers/Patient.controllers")
+const {
+  getInformationsOfPatient,
+  addPatient,
+  patientAuthentification,
+  gettingPatient,
+  UpdatePatient,
+  verifyCode,
+  expoNotification,
+} = require("../Controllers/Patient.controllers");
 //authentification routes
 
 //post request to add a patient.
-router.post("/signup",addPatient)
+router.post("/signup", addPatient);
 //post request to authenticate patient.
-router.post("/signin",patientAuthentification)
-//check verification code 
-router.post("/verify",verifyCode)
+router.post("/signin", patientAuthentification);
+//check verification code
+router.post("/verify", verifyCode);
 //post request to get user info
-router.post("/One",gettingPatient)
+router.post("/One", gettingPatient);
+
+//adding pushNotification token
+router.put("/addTokenNotif", expoNotification);
 
 
-
-//UPDATE request to updateProfoile.
-
-//UPDAT first name 
-router.put("/updateAll",UpdatePatient)
+//UPDATE Patient
+router.put("/updateAll", UpdatePatient);
 
 //Update last name
 
-
-// router.put('/update/:id',updatePatient) ; 
+// router.put('/update/:id',updatePatient) ;
 // // get request for fetching informations.
-router.get('/getOne/:id', getInformationsOfPatient );
+router.get("/getOne/:id", getInformationsOfPatient);
 module.exports = router;
