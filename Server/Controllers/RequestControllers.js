@@ -158,7 +158,6 @@ module.exports = {
       // });
       request.TreatedORNot = req.body.state;
       await request.save();
-      console.log(Patient);
       res.status(201).json(request);
     } catch (err) {
       console.log(err);
