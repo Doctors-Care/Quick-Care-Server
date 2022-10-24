@@ -1,5 +1,6 @@
 const { request } = require("express");
 const db = require("../Database/index");
+const { sendNotification } = require("./Notification");
 
 module.exports = {
   addRequest: async (req, res) => {
@@ -26,7 +27,7 @@ module.exports = {
   getAllRequests: async (req, res) => {
     try {
       const requests = await db.requests.findAll({
-        where: { status: "Doctor",DoctorId:null },
+        where: { status: "Doctor", DoctorId: null },
       });
       res.status(200).json(requests);
     } catch (error) {
@@ -38,7 +39,7 @@ module.exports = {
   getAllOKRequests: async (req, res) => {
     try {
       const requests = await db.requests.findAll({
-        where: { status: "Doctor",DoctorId:!null },
+        where: { status: "Doctor", DoctorId: !null,TreatedORNot:null },
       });
       res.status(200).json(requests);
     } catch (error) {
@@ -46,6 +47,19 @@ module.exports = {
       res.status(501).json(error);
     }
   },
+
+  getAllOKDoneRequests: async (req, res) => {
+    try {
+      const requests = await db.requests.findAll({
+        where: { status: "Doctor", DoctorId: !null,TreatedORNot:true },
+      });
+      res.status(200).json(requests);
+    } catch (error) {
+      console.log(error);
+      res.status(501).json(error);
+    }
+  },
+
 
   actifRequest: async (req, res) => {
     try {
@@ -58,6 +72,10 @@ module.exports = {
         const HceAccept = await db.Hce.findOne({
           where: { id: accepted.hceId },
         });
+        const Patient = await db.Patients.findOne({
+          where: { id: accepted.patientId },
+        });
+        sendNotification(Patient.NotifToken);
         res.status(201).json(HceAccept);
       } else {
         res.status(202).json("waiting");
@@ -112,12 +130,17 @@ module.exports = {
   },
   takeInCharge: async (req, res) => {
     try {
-      const request = await db.requests.findOne( {
+      const request = await db.requests.findOne({
         where: req.body.id,
       });
-      request.DoctorId=req.body.doctorId
-      request.TreatedORNot=true
-      await request.save()
+      request.DoctorId = req.body.doctorId;
+      await request.save();
+      // const Patient = await db.Patients.findOne({
+      //   where: { id: request.patientId },
+      // });
+      // console.log(Patient);
+      // sendNotification(Patient.NotifToken);
+
       res.status(201).json(request);
     } catch (err) {
       console.log(err);
@@ -125,14 +148,29 @@ module.exports = {
     }
   },
 
-// doctorCallHce : async (req,res)=>{
-//  try {
-//   cons
-//  } catch (error) {
-  
-//  }
+  markAsDone: async (req, res) => {
+    try {
+      const request = await db.requests.findOne({
+        where: req.body.id,
+      });
+      // const Patient = await db.Patients.findOne({
+      //   where: { id: request.patientId },
+      // });
+      request.TreatedORNot = req.body.state;
+      await request.save();
+      res.status(201).json(request);
+    } catch (err) {
+      console.log(err);
+      res.status(501).json(err);
+    }
+  },
 
+  // doctorCallHce : async (req,res)=>{
+  //  try {
+  //   cons
+  //  } catch (error) {
 
-// }
+  //  }
 
+  // }
 };
