@@ -1,26 +1,25 @@
-const nodemailer = require ("nodemailer");
+const nodemailer = require("nodemailer");
 
+require("dotenv").config();
 
 const transport = nodemailer.createTransport({
-    // pool: true,
   host: "smtp.gmail.com",
   port: 587,
   secure: false,
-    auth:{
-        user : "quickcarec4@gmail.com",
-        pass:"mrdyqidfwmkpevcd"
-    }
+  auth: {
+    user: "quickcarec422@gmail.com",
+    pass: process.env.mdp,
+  },
 });
-module.exports.sendConfirmationMail =(email, code)=>{
-    console.log(email,code);
-return transport
-.sendMail({
-    from:"quickcarec4@gmail.com",
+module.exports.sendConfirmationMail = (email, code) => {
+//   console.log(email, code);
+  return transport.sendMail({
+    from: "QuickCareApp@gmail.com",
     to: email,
-    subject:"Confirm your Account",
+    subject: "Confirm your Account",
     html: `<h1> Confirmation of your Registration </h1>
-    <h2> Bonjour </h2>
-    <p> To activate your Account please by typing the code below: </p>
-    <a>${code}</a>`
-})
-}
+    <h2> Welcome To Quick Care App </h2>
+    <p>  Please enter the code below to activate your account: </p>
+    <a>Your Secret code is: "${code}"</a>`,
+  });
+};
