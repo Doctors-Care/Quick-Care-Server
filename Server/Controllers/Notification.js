@@ -1,10 +1,10 @@
 const { Expo } = require("expo-server-sdk");
 
-let expo = new Expo({
-  accessToken: "Y_d1jkeSnrUgwlEd1K30Ub9At3EOZpELK0Jah8NS",
-});
 
 module.exports.sendNotification = (pushToken) => {
+  let expo = new Expo({
+    accessToken: "EVINP6Zq9o4ht6fICB3LN1zx8m8cJHKimVkVvjxt",
+  });
   let message = [];
   if (!Expo.isExpoPushToken(pushToken)) {
     console.error(`Push token ${pushToken} is not a valid Expo push token`);
