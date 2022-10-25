@@ -64,7 +64,7 @@ module.exports = {
         email: req.body.email,
         password: req.body.password,
       };
-
+console.log(doctor);
       const doctorAuth = await db.Doctors.findOne({
         where: {
           email: req.body.email,
