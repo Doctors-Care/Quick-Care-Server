@@ -17,9 +17,9 @@ module.exports.sendConfirmationMail = (email, code) => {
     from: "QuickCareApp@gmail.com",
     to: email,
     subject: "Confirm your Account",
-    html: `<h1> Confirmation of Account </h1>
+    html: `<h1> Confirmation of your Registration </h1>
     <h2> Welcome To Quick Care App </h2>
-    <p>  Please use the Code BElow to activate your account: </p>
-    <a> Your activation Code is : ${code} </a>`,
+    <p>  Please enter the code below to activate your account: </p>
+    <a>Your Secret code is: "${code}"</a>`,
   });
 };
