@@ -1,6 +1,7 @@
 // Define and export the sequelize model that represents the table Patients.
 
 module.exports = (sequelize, DataTypes) => {
+
     const Patient = sequelize.define("patients", {
       firstName: {
         type: DataTypes.STRING,
@@ -44,10 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    NotifToken:{
-      type :DataTypes.STRING,
-    }
-    });
-  
-    return Patient;
-  };
+    NotifToken: {
+      type: DataTypes.STRING,
+    },
+  });
+
+  return Patient;
+};

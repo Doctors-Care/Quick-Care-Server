@@ -1,6 +1,6 @@
 const { request } = require("express");
 const db = require("../Database/index");
-const { sendNotification } = require("./Notification");
+// const { sendNotification } = require("./Notification");
 
 module.exports = {
   addRequest: async (req, res) => {
@@ -72,6 +72,7 @@ module.exports = {
         const HceAccept = await db.Hce.findOne({
           where: { id: accepted.hceId },
         });
+
         const Patient = await db.Patients.findOne({
           where: { id: accepted.patientId },
         });

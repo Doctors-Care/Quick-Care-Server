@@ -77,6 +77,7 @@ console.log(doctor);
       if (!Match) {
         return res.status(402).json({ message: "check the entries" });
       } else {
+
         const exp = Date.now() + 1000 * 60 * 60;
         const token = jwt.sign(
           { sub: doctorAuth.id, exp },
