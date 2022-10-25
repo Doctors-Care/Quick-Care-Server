@@ -18,21 +18,21 @@ var PORT = process.env.PORT || 3001
 
 const server = http.createServer(app);
 
-const io = new Server (server,{cors:{origin:"http://192.168.11.223:19000/Chat"}})
+const io = new Server (server,{cors:{origin:"http://192.168.11.85:19000/Chat"}})
 // const ioDoc = new Server (server,{cors:{origin:"http://192.168.11.223:19000/doctorChat"}})
 
-io.on("connection", async (socket)=>{
-  const sockets = await io.fetchSockets();
-  for (const socket of sockets) {
-    console.log(socket.data);
-  }
+io.on("connection", (socket)=>{
+  // const sockets = await io.fetchSockets();
+  // for (const socket of sockets) {
+  //   console.log(socket.data);
+  // }
   console.log(`User Connected:${socket.id}`);
   socket.on('disconnect', () => {
     socket.disconnect()
     console.log('user disconnected'); })
   socket.on("patient_send_message", (data)=>{
 // console.log(data);
-    socket.broadcast.emit("Patient_message", data)
+    socket.emit("Patient_message", data)
     socket.broadcast.emit("Doctor_message", data)
     // socket.to(socket.id).emit( data)
   })
