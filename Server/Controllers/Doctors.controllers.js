@@ -1,9 +1,12 @@
 // //Controller related to Admin ressource.
 const db = require("../Database/index");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 dotenv.config();
+
+
+
 
 // // getInformationsOfDoctor,updateDoctor
 
@@ -57,6 +60,7 @@ module.exports = {
       res.status(555).send(error);
     }
   },
+ 
 
   loginDoc: async (req, res) => {
     try {
@@ -64,41 +68,37 @@ module.exports = {
         email: req.body.email,
         password: req.body.password,
       };
-console.log(doctor);
+
       const doctorAuth = await db.Doctors.findOne({
         where: {
           email: req.body.email,
         },
       });
       if (!doctorAuth) {
-        return res.status(404).send({ message: "user not found" });
+        res.status(404).send({ message: "user not found" });
       }
       const Match = bcrypt.compareSync(doctor.password, doctorAuth.password);
       if (!Match) {
-        return res.status(402).json({ message: "check the entries" });
+        res.status(402).json({ message: "check the entries" });
       } else {
-
-        const exp = Date.now() + 1000 * 60 * 60;
-        const token = jwt.sign(
-          { sub: doctorAuth.id, exp },
-          process.env.SECRET_KEY
-        );
-        res.cookie("Authorization", token, {
-          expires: new Date(exp),
-          httpOnly: true,
-          sameSite: "lax",
-        });
-        return res
-          .status(202)
-          .json({ message: "welcome Back", doctorAuth, token });
+        const exp = Date.now() + 1000*60*60 ;
+    const token = jwt.sign({ sub:doctorAuth.id, exp }, process.env.SECRET_KEY);
+    res.cookie("Authorization", token, {
+      expires: new Date(exp),
+      httpOnly: true,
+      sameSite: "lax"
+    });
+    const response = { message: "welcome Back", doctorAuth , token }
+         res.status(202).json(response);
       }
     } catch (err) {
       console.log(err);
-      return res.status(401).json("error");
+      res.status(401).json("err");
     }
   },
 
   //   //method to update a post to the database via the respective model function.
+
 
   getOneDoc: async (req, res) => {
     try {
@@ -123,7 +123,6 @@ console.log(doctor);
       });
 
       const doctor = {
-        id: req.body.id,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
@@ -141,17 +140,4 @@ console.log(doctor);
       res.status(401).send(err);
     }
   },
-
-  logout: (req, res)=> {
-    try{
-  res.clearCookie("Authorization");
-  console.log("cookie cleared");
-  res.status(200).json("logged out");}
-  catch(err){
-    console.log(err);
-    res.status(400).json("try again");
-  }}
-
-
-
 };

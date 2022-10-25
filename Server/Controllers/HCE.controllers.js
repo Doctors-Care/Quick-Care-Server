@@ -95,14 +95,4 @@ module.exports = {
       res.status(400).send("error");
     }
   },
-  logout: (req, res)=> {
-    try{
-  res.clearCookie("Authorization");
-  console.log("cookie cleared");
-  res.status(200).json("logged out");}
-  catch(err){
-    console.log(err);
-    res.status(400).json("try again");
-  }}
-
 };
