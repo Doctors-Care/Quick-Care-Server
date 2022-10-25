@@ -1,12 +1,16 @@
 const bcrypt = require("bcrypt");
 const { sendConfirmationMail } = require("./nodemailer");
 
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
+const { sendNotification } = require("./Notification");
+
 //Controller related to users ressource for login And signUp.
 const db = require("../Database/index");
 //adding client
 module.exports = {
-
-//adding patient to the database
+  //adding patient to the database
 
   addPatient: async (req, res) => {
     try {
@@ -29,15 +33,16 @@ module.exports = {
         activationCode: activationCode,
       };
       // sending validation code via node mailer
-            const nodemailer = await sendConfirmationMail(
-              newPatient.email,
-              activationCode
-            );
-            console.log("nodemailer",nodemailer);
+      const nodemailer = await sendConfirmationMail(
+        newPatient.email,
+        activationCode
+      );
+      console.log("nodemailer", nodemailer);
       //creating the profile for patient
       const patient = await db.Patients.create(newPatient);
-      res.status(203).send(patient)} 
-    catch (error) {console.log(error);
+      res.status(203).send(patient);
+    } catch (error) {
+      console.log(error);
       res.status(400).send("you have error");
     }
   },
@@ -71,12 +76,26 @@ module.exports = {
       const Valid = bcrypt.compareSync(req.body.password, Patient.password);
       if (!Valid) {
         return res.status(402).send("wrong password");
+      } else {
+        const exp = Date.now() + 1000 * 60 * 60;
+        const token = jwt.sign(
+          { sub: Patient.id, exp },
+          process.env.SECRET_KEY
+        );
+        res.cookie("Authorization", token, {
+          expires: new Date(exp),
+          httpOnly: true,
+          sameSite: "lax",
+        });
+        sendNotification(Patient.NotifToken);
+        return res
+          .status(200)
+          .send({ message: "welcome back", Patient, token });
       }
-
-      res.status(200).send(Patient);
+      // res.status(200).send(Patient);
     } catch (error) {
       console.log(error);
-      res.status(400).send("Somthing went wrong");
+      return res.status(400).json("Somthing went wrong");
     }
   },
   getInformationsOfPatient: async (req, res) => {
@@ -109,6 +128,21 @@ module.exports = {
     try {
       let filter = {
         id: req.body.id,
+      };
+
+      const Patient = await db.Patients.findOne({ where: filter });
+      const change = await Patient.update(req.body);
+      res.status(201).json(change);
+    } catch (error) {
+      console.log(error);
+      res.status(401).json("failed");
+    }
+  },
+
+  expoNotification: async (req, res) => {
+    try {
+      let filter = {
+        email: req.body.email,
       };
 
       const Patient = await db.Patients.findOne({ where: filter });
@@ -154,4 +188,14 @@ module.exports = {
   //     res.status(401).json("failed")
   //   }
   // },
+  logout: (req, res)=> {
+    try{
+  res.clearCookie("Authorization");
+  console.log("cookie cleared");
+  res.status(200).json("logged out");}
+  catch(err){
+    console.log(err);
+    res.status(400).json("try again");
+  }}
+
 };
