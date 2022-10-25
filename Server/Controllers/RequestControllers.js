@@ -157,7 +157,8 @@ module.exports = {
       // const Patient = await db.Patients.findOne({
       //   where: { id: request.patientId },
       // });
-      request.TreatedORNot = req.body.state;
+      console.log(request);
+      request.TreatedORNot = true;
       await request.save();
       res.status(201).json(request);
     } catch (err) {
