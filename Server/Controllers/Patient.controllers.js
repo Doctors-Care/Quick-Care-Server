@@ -1,14 +1,13 @@
 const bcrypt = require("bcrypt");
 const { sendConfirmationMail } = require("./nodemailer");
-
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-const { sendNotification } =require("./Notification")
-
+const {sendNotification} =require("./Notification")
 
 //Controller related to users ressource for login And signUp.
 const db = require("../Database/index");
+
 //adding client
 module.exports = {
   //adding patient to the database
@@ -78,7 +77,7 @@ module.exports = {
       if (!Valid) {
         res.status(402).send("wrong password");
       } else {
-        const exp = Date.now() + 1000 * 60 * 60;
+        const exp = Date.now() + 1000 * 60 * 60*45588965;
         const token = jwt.sign(
           { sub: Patient.id, exp },
           process.env.SECRET_KEY
@@ -88,16 +87,17 @@ module.exports = {
           httpOnly: true,
           sameSite: "lax",
         });
+        sendNotification(Patient.NotifToken)
         res.status(200).send({ message: "welcome back", Patient, token });
       }
-      sendNotification(Patient.NotifToken)
-      res.status(200).send(Patient);
 
     } catch (error) {
       console.log(error);
       res.status(400).send("Somthing went wrong");
     }
   },
+
+
   getInformationsOfPatient: async (req, res) => {
     console.log(req.params.id);
     try {
@@ -144,13 +144,16 @@ module.exports = {
       let filter = {
         email: req.body.email,
       };
+      let Token ={
+        NotifToken:req.body.NotifToken
+      }
 
       const Patient = await db.Patients.findOne({ where: filter });
-      const change = await Patient.update(req.body);
+      const change = await Patient.update(Token);
       res.status(201).json(change);
     } catch (error) {
       console.log(error);
-      res.status(401).json("failed");
+      res.status(402).json(error);
     }
   },
   

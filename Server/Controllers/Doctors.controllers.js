@@ -88,11 +88,12 @@ module.exports = {
       httpOnly: true,
       sameSite: "lax"
     });
-         res.status(202).json({ message: "welcome Back",doctorAuth,token });
+    const response = { message: "welcome Back", doctorAuth , token }
+         res.status(202).json(response);
       }
     } catch (err) {
       console.log(err);
-      res.status(401).json(err);
+      res.status(401).json("err");
     }
   },
 
