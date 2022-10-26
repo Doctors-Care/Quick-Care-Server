@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
+      defaultValue:"https://bootdey.com/img/Content/avatar/avatar6.png"
     },
     activationCode: {
       type: DataTypes.STRING,
