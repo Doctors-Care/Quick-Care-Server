@@ -1,6 +1,6 @@
 const { request } = require("express");
 const db = require("../Database/index");
-// const { sendNotification } = require("./Notification");
+const { sendNotification } = require("./Notification");
 
 module.exports = {
   addRequest: async (req, res) => {

@@ -130,14 +130,27 @@ module.exports = {
         licenseNumber: req.body.licenseNumber,
         adress: req.body.adress,
         disponibility: req.body.disponibility,
+        image: req.body.image
       };
+      console.log("image",doctor.image);
       const doctorAuth = await db.Doctors.update(doctor, {
         where: { id: req.body.id },
       });
-      res.status(202).json(doctor);
+      res.status(202).json(doctorAuth);
     } catch (err) {
       console.log(err);
       res.status(401).send(err);
     }
   },
+
+
+logout : async (req, res) => {
+    try {
+      res.clearCookie("Authorization");
+      return res.status(200).json({ message: "logged out" });
+    } catch (err) {
+      console.log(err);
+      return  res.status(401).json(err);
+    }
+  }
 };
