@@ -88,8 +88,9 @@ module.exports = {
   },
   findHceReq: async (req, res) => {
     try {
+     let id = req.params.id
       const requestHCE = await db.requests.findAll({
-        where: { status: "HCE" },
+        where: { status: "HCE", hceId: id },
         include: [
           {
             model: db.Patients,
@@ -104,11 +105,45 @@ module.exports = {
       res.status(530).send("you have an error");
     }
   },
-  //     validationHce: async(req, res)=>{
-  // // try{
-  // // let validation =  await debug.requests.fin
-  // // }
-  //     },
+  findActiveHceReq: async (req, res) => {
+    try {
+      const requestHCE = await db.requests.findAll({
+        where: { status: "HCE", hceId: null },
+        include: [
+          {
+            model: db.Patients,
+            attributes: ["firstName", "lastName", "adress"],
+          },
+        ],
+      });
+      console.log(requestHCE);
+      res.status(222).json(requestHCE);
+    } catch (error) {
+      console.log(error);
+      res.status(530).send("you have an error");
+    }
+  },
+      validationHce: async(req, res)=>{
+        try {
+          console.log(req.body.id);
+          const request = await db.requests.findOne({
+            where: req.body.id,
+          });
+          request.hceId = req.params.id;
+          await request.save();
+          // const Patient = await db.Patients.findOne({
+          //   where: { id: request.patientId },
+          // });
+          // console.log(Patient);
+          // sendNotification(Patient.NotifToken);
+    
+          res.status(201).json(request);
+        } catch (err) {
+          console.log(err);
+          res.status(501).json(err);
+        }
+    
+      },
   findAllDoctorRequestsOfOneUser: async (req, res) => {
     try {
       const filter = {

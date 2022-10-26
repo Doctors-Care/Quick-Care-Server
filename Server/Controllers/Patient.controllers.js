@@ -192,4 +192,13 @@ module.exports = {
   //     res.status(401).json("failed")
   //   }
   // },
+  logout : async (req, res) => {
+    try {
+      res.clearCookie("Authorization");
+      return res.status(200).json({ message: "logged out" });
+    } catch (err) {
+      console.log(err);
+      return  res.status(401).json(err);
+    }
+  }
 };
