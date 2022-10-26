@@ -1,7 +1,7 @@
 const { Expo } = require("expo-server-sdk");
 
 let expo = new Expo({
-  accessToken: "Y_d1jkeSnrUgwlEd1K30Ub9At3EOZpELK0Jah8NS",
+  accessToken: "XfFYS7hqIJhCgj26OZQpZ2l8ipRLomllHacSvDHP",
 });
 
 module.exports.sendNotification = (pushToken) => {

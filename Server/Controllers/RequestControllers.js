@@ -108,10 +108,31 @@ module.exports = {
   // // let validation =  await debug.requests.fin
   // // }
   //     },
-  findAllRequestsOfOneUser: async (req, res) => {
+  findAllDoctorRequestsOfOneUser: async (req, res) => {
     try {
       const filter = {
         patientId: req.body.id,
+        status: "Doctor"
+      };
+
+      const requestOfPatient = await db.requests.findAll({
+        where: filter,
+        include: [
+          { model: db.Doctors, attributes: ["firstName", "lastName"] },
+        ],
+      });
+
+      res.status(222).json(requestOfPatient);
+    } catch (error) {
+      console.log(error);
+      res.status(530).send("you have error");
+    }
+  },
+  findAllHCERequestsOfOneUser: async (req, res) => {
+    try {
+      const filter = {
+        patientId: req.body.id,
+        Status : "HCE"
       };
 
       const requestOfPatient = await db.requests.findAll({
