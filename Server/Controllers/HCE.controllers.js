@@ -46,7 +46,7 @@ module.exports = {
       let filter = { activationCode: req.body.activationCode };
       const hce = await db.Hce.findOne({ where: filter });
       if (hce) {
-        return res.status(200).send("allowed");
+        return res.status(200).send({message:"allowed", infos:hce});
       }
       res.status(402).send("wrong code");
     } catch (error) {
@@ -77,7 +77,7 @@ module.exports = {
         });
         console.log(res);
         console.log("token", token);
-      return   res.status(202).json({ message: "welcome back" });
+      return   res.status(202).send(Hce);
       }
     } catch (error) {
       console.log(error);
