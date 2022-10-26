@@ -12,14 +12,8 @@ router.post("/getAllHceOfOnePatient",findAllHCERequestsOfOneUser)
 router.get("/getAllRequests",requireAuhDoc,getAllRequests)
 router.put("/putDoctorId",requireAuhDoc,takeInCharge)
 router.get("/getAllOKRequests",requireAuhDoc,getAllOKRequests)
-router.put("/markasdone",requireAuhDoc,markAsDone)
 router.get("/getAllOKDoneRequests",requireAuhDoc,getAllOKDoneRequests)
-
-
-
-
-
-
+router.put("/markasdone",requireAuhDoc,markAsDone)
 
 
 module.exports = router;
