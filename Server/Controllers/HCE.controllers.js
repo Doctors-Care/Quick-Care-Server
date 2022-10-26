@@ -20,7 +20,7 @@ module.exports = {
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
       phoneNumber: req.body.phoneNumber,
-      address: req.body.address,
+      adress: req.body.address,
       licenseNumber: req.body.licenseNumber,
       activationCode: activationCode,
     };
@@ -75,8 +75,9 @@ module.exports = {
           httpOnly: true,
           sameSite: "lax",
         });
-
-        res.status(202).json({ message: "welcome back" }, Hce, token);
+        console.log(res);
+        console.log("token", token);
+      return   res.status(202).json({ message: "welcome back" });
       }
     } catch (error) {
       console.log(error);
@@ -95,14 +96,4 @@ module.exports = {
       res.status(400).send("error");
     }
   },
-  logout: (req, res)=> {
-    try{
-  res.clearCookie("Authorization");
-  console.log("cookie cleared");
-  res.status(200).json("logged out");}
-  catch(err){
-    console.log(err);
-    res.status(400).json("try again");
-  }}
-
 };
