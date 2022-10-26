@@ -8,7 +8,8 @@ const {
   gettingPatient,
   UpdatePatient,
   verifyCode,
-  expoNotification,logout
+  expoNotification,
+  logout
 } = require("../Controllers/Patient.controllers");
 //authentification routes
 
@@ -33,7 +34,6 @@ router.put("/updateAll", UpdatePatient);
 // router.put('/update/:id',updatePatient) ;
 // // get request for fetching informations.
 router.get("/getOne/:id", getInformationsOfPatient);
-router.get('/logout',logout )
-
+router.get  ('/logout',logout) ;
 
 module.exports = router;

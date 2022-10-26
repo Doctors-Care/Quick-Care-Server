@@ -20,7 +20,7 @@ module.exports = {
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
       phoneNumber: req.body.phoneNumber,
-      address: req.body.address,
+      adress: req.body.address,
       licenseNumber: req.body.licenseNumber,
       activationCode: activationCode,
     };
@@ -46,7 +46,7 @@ module.exports = {
       let filter = { activationCode: req.body.activationCode };
       const hce = await db.Hce.findOne({ where: filter });
       if (hce) {
-        return res.status(200).send("allowed");
+        return res.status(200).send({message:"allowed", infos:hce});
       }
       res.status(402).send("wrong code");
     } catch (error) {
@@ -75,8 +75,9 @@ module.exports = {
           httpOnly: true,
           sameSite: "lax",
         });
-
-        res.status(202).json({ message: "welcome back" }, Hce, token);
+        console.log(res);
+        console.log("token", token);
+      return   res.status(202).send(Hce);
       }
     } catch (error) {
       console.log(error);
@@ -95,14 +96,13 @@ module.exports = {
       res.status(400).send("error");
     }
   },
-  logout: (req, res)=> {
-    try{
-  res.clearCookie("Authorization");
-  console.log("cookie cleared");
-  res.status(200).json("logged out");}
-  catch(err){
-    console.log(err);
-    res.status(400).json("try again");
-  }}
-
+  logout : async (req, res) => {
+    try {
+      res.clearCookie("Authorization");
+      return res.status(200).json({ message: "logged out" });
+    } catch (err) {
+      console.log(err);
+      return  res.status(401).json(err);
+    }
+  }
 };

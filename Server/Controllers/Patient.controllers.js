@@ -5,7 +5,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 const {sendNotification} =require("./Notification")
 
-
 //Controller related to users ressource for login And signUp.
 const db = require("../Database/index");
 
@@ -72,11 +71,11 @@ module.exports = {
       };
       const Patient = await db.Patients.findOne({ where: filter });
       if (!Patient) {
-        return res.status(401).send("user not found check your email");
+        res.status(401).send("user not found check your email");
       }
       const Valid = bcrypt.compareSync(req.body.password, Patient.password);
       if (!Valid) {
-        return res.status(402).send("wrong password");
+        res.status(402).send("wrong password");
       } else {
         const exp = Date.now() + 1000 * 60 * 60*45588965;
         const token = jwt.sign(
@@ -88,16 +87,13 @@ module.exports = {
           httpOnly: true,
           sameSite: "lax",
         });
-
-        sendNotification(Patient.NotifToken);
-        return res
-          .status(200)
-          .send({ message: "welcome back", Patient, token });
+        sendNotification(Patient.NotifToken)
+        res.status(200).send({ message: "welcome back", Patient, token });
       }
-      // res.status(200).send(Patient);
+
     } catch (error) {
       console.log(error);
-      return res.status(400).json("Somthing went wrong");
+      res.status(400).send("Somthing went wrong");
     }
   },
 
@@ -143,7 +139,7 @@ module.exports = {
     }
   },
 
-  expoNotification: async (req, res) => {
+  expoNotification:async(req,res)=>{
     try {
       let filter = {
         email: req.body.email,
@@ -160,6 +156,7 @@ module.exports = {
       res.status(402).json(error);
     }
   },
+  
 
   //update last name
   // UpdateLastName:async(req,res)=>{
@@ -195,14 +192,13 @@ module.exports = {
   //     res.status(401).json("failed")
   //   }
   // },
-  logout: (req, res)=> {
-    try{
-  res.clearCookie("Authorization");
-  console.log("cookie cleared");
-  res.status(200).json("logged out");}
-  catch(err){
-    console.log(err);
-    res.status(400).json("try again");
-  }}
-
+  logout : async (req, res) => {
+    try {
+      res.clearCookie("Authorization");
+      return res.status(200).json({ message: "logged out" });
+    } catch (err) {
+      console.log(err);
+      return  res.status(401).json(err);
+    }
+  }
 };

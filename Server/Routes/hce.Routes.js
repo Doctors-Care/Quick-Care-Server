@@ -20,10 +20,8 @@ router.post("/add",addHce)
 // router.put('/update/:id',updateHce) ; 
 router.post("/getOne",requireAuthHce,gettingOneHce)
 router.post("/accountconfirmation",verifyCode)
-router.get('/logout',logout )
 
-
-
+router.get  ('/logout',logout) ;
 
 
 
