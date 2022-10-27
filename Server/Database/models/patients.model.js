@@ -46,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
     NotifToken: {
       type: DataTypes.STRING,
     },
+    confirmation :{
+      type:DataTypes.BOOLEAN,
+      defaultValue:false
+    }
   });
 
   return Patient;

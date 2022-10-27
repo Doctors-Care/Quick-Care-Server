@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue:"https://bootdey.com/img/Content/avatar/avatar6.png"
       },
+      confirmation :{
+        type:DataTypes.BOOLEAN,
+        defaultValue:false
+      }
     },
     {
       tableName: "Doctors",
