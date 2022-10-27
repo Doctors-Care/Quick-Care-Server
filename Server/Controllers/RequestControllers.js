@@ -15,6 +15,8 @@ module.exports = {
         description: req.body.description,
         status: req.body.status,
         patientId: requestidentif.id,
+        latitude:req.body.latitude,
+        longitude:req.body.longitude,
       };
       const request = await db.requests.create(requestForm);
       res.status(201).json(request);
@@ -151,34 +153,31 @@ module.exports = {
 
       const requestOfPatient = await db.requests.findAll({
         where: filter,
-        include: [{ model: db.Doctors, attributes: ["firstName", "lastName"] }],
+  
       });
+      console.log(requestOfPatient);
 
-      res.status(222).json(requestOfPatient);
+      return res.status(222).json(requestOfPatient);
     } catch (error) {
       console.log(error);
-      res.status(530).send("you have error");
+      return res.status(530).json("you have error");
     }
   },
   findAllHCERequestsOfOneUser: async (req, res) => {
     try {
       const filter = {
         patientId: req.body.id,
-        Status: "HCE",
+        status: "HCE",
       };
 
       const requestOfPatient = await db.requests.findAll({
-        where: filter,
-        include: [
-          { model: db.Hce, attributes: ["name"] },
-          { model: db.Doctors, attributes: ["firstName", "lastName"] },
-        ],
+        where: filter, 
       });
 
-      res.status(222).json(requestOfPatient);
+     return res.status(222).json(requestOfPatient);
     } catch (error) {
       console.log(error);
-      res.status(530).send("you have error");
+      return res.status(530).json(error);
     }
   },
   takeInCharge: async (req, res) => {

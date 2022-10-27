@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
     },
     longitude: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,6),
     },
     latitude: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10,6),
     },
   });
 
