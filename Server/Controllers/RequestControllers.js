@@ -16,13 +16,13 @@ module.exports = {
         status: req.body.status,
         patientId: requestidentif.id,
         latitude:req.body.latitude,
-        longitude:req.body.longitude,
+        longitude:req.body.longitude
       };
       const request = await db.requests.create(requestForm);
       res.status(201).json(request);
     } catch (error) {
       console.log(error);
-      res.status(500).json(error);
+      res.status(500).json("error");
     }
   },
 
@@ -34,7 +34,7 @@ module.exports = {
       res.status(200).json(requests);
     } catch (error) {
       console.log(error);
-      res.status(501).json(error);
+      res.status(501).json("error");
     }
   },
 
@@ -153,8 +153,10 @@ module.exports = {
 
       const requestOfPatient = await db.requests.findAll({
         where: filter,
-  
-      });
+        include: [
+          { model: db.Doctors, attributes: ["firstName", "lastName"] },
+        ],
+      })
       console.log(requestOfPatient);
 
       return res.status(222).json(requestOfPatient);
@@ -171,8 +173,12 @@ module.exports = {
       };
 
       const requestOfPatient = await db.requests.findAll({
-        where: filter, 
-      });
+        where: filter,
+        include: [
+          { model: db.Hce, attributes: ["name"] },
+          { model: db.Doctors, attributes: ["firstName", "lastName"] },
+        ],
+      })
 
      return res.status(222).json(requestOfPatient);
     } catch (error) {
