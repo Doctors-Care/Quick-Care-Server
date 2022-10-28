@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
+      defaultValue:"https://bootdey.com/img/Content/avatar/avatar6.png"
     },
     activationCode: {
       type: DataTypes.STRING,
@@ -45,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
     NotifToken: {
       type: DataTypes.STRING,
     },
+    confirmation :{
+      type:DataTypes.BOOLEAN,
+      defaultValue:false
+    }
   });
 
   return Patient;

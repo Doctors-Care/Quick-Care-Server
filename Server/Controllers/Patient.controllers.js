@@ -3,7 +3,7 @@ const { sendConfirmationMail } = require("./nodemailer");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-const {sendNotification} =require("./Notification")
+const { sendNotification } = require("./Notification");
 
 //Controller related to users ressource for login And signUp.
 const db = require("../Database/index");
@@ -56,6 +56,8 @@ module.exports = {
       const Patient = await db.Patients.findOne({ where: filter });
 
       if (Patient.activationCode === req.body.activationCode) {
+        Patient.confirmation = true;
+        Patient.save();
         return res.status(200).send("thank you for joining your app");
       }
       res.status(402).send("incorrect Code");
@@ -76,8 +78,11 @@ module.exports = {
       const Valid = bcrypt.compareSync(req.body.password, Patient.password);
       if (!Valid) {
         res.status(402).send("wrong password");
+      }
+      if (Patient.confirmation == false) {
+        res.status(402).send("confirm your account");
       } else {
-        const exp = Date.now() + 1000 * 60 * 60*45588965;
+        const exp = Date.now() + 1000 * 60 * 60 * 45588965;
         const token = jwt.sign(
           { sub: Patient.id, exp },
           process.env.SECRET_KEY
@@ -87,16 +92,14 @@ module.exports = {
           httpOnly: true,
           sameSite: "lax",
         });
-        sendNotification(Patient.NotifToken)
+        sendNotification(Patient.NotifToken);
         res.status(200).send({ message: "welcome back", Patient, token });
       }
-
     } catch (error) {
       console.log(error);
-      res.status(400).send("Somthing went wrong");
+      return res.status(400).send("Somthing went wrong");
     }
   },
-
 
   getInformationsOfPatient: async (req, res) => {
     console.log(req.params.id);
@@ -139,14 +142,14 @@ module.exports = {
     }
   },
 
-  expoNotification:async(req,res)=>{
+  expoNotification: async (req, res) => {
     try {
       let filter = {
         email: req.body.email,
       };
-      let Token ={
-        NotifToken:req.body.NotifToken
-      }
+      let Token = {
+        NotifToken: req.body.NotifToken,
+      };
 
       const Patient = await db.Patients.findOne({ where: filter });
       const change = await Patient.update(Token);
@@ -156,7 +159,6 @@ module.exports = {
       res.status(402).json(error);
     }
   },
-  
 
   //update last name
   // UpdateLastName:async(req,res)=>{
@@ -192,13 +194,13 @@ module.exports = {
   //     res.status(401).json("failed")
   //   }
   // },
-  logout : async (req, res) => {
+  logout: async (req, res) => {
     try {
       res.clearCookie("Authorization");
       return res.status(200).json({ message: "logged out" });
     } catch (err) {
       console.log(err);
-      return  res.status(401).json(err);
+      return res.status(401).json(err);
     }
-  }
+  },
 };

@@ -15,12 +15,14 @@ module.exports = {
         description: req.body.description,
         status: req.body.status,
         patientId: requestidentif.id,
+        latitude:req.body.latitude,
+        longitude:req.body.longitude
       };
       const request = await db.requests.create(requestForm);
       res.status(201).json(request);
     } catch (error) {
       console.log(error);
-      res.status(500).json(error);
+      res.status(500).json("error");
     }
   },
 
@@ -32,14 +34,14 @@ module.exports = {
       res.status(200).json(requests);
     } catch (error) {
       console.log(error);
-      res.status(501).json(error);
+      res.status(501).json("error");
     }
   },
 
   getAllOKRequests: async (req, res) => {
     try {
       const requests = await db.requests.findAll({
-        where: { status: "Doctor", DoctorId: !null,TreatedORNot:null },
+        where: { status: "Doctor", DoctorId: !null, TreatedORNot: null },
       });
       res.status(200).json(requests);
     } catch (error) {
@@ -51,7 +53,7 @@ module.exports = {
   getAllOKDoneRequests: async (req, res) => {
     try {
       const requests = await db.requests.findAll({
-        where: { status: "Doctor", DoctorId: !null,TreatedORNot:true },
+        where: { status: "Doctor", DoctorId: !null, TreatedORNot: true },
       });
       res.status(200).json(requests);
     } catch (error) {
@@ -59,7 +61,6 @@ module.exports = {
       res.status(501).json(error);
     }
   },
-
 
   actifRequest: async (req, res) => {
     try {
@@ -88,7 +89,7 @@ module.exports = {
   },
   findHceReq: async (req, res) => {
     try {
-     let id = req.params.id
+      let id = req.params.id;
       const requestHCE = await db.requests.findAll({
         where: { status: "HCE", hceId: id },
         include: [
@@ -123,32 +124,31 @@ module.exports = {
       res.status(530).send("you have an error");
     }
   },
-      validationHce: async(req, res)=>{
-        try {
-          console.log(req.body.id);
-          const request = await db.requests.findOne({
-            where: req.body.id,
-          });
-          request.hceId = req.params.id;
-          await request.save();
-          // const Patient = await db.Patients.findOne({
-          //   where: { id: request.patientId },
-          // });
-          // console.log(Patient);
-          // sendNotification(Patient.NotifToken);
-    
-          res.status(201).json(request);
-        } catch (err) {
-          console.log(err);
-          res.status(501).json(err);
-        }
-    
-      },
+  validationHce: async (req, res) => {
+    try {
+      console.log(req.body.id);
+      const request = await db.requests.findOne({
+        where: req.body.id,
+      });
+      request.hceId = req.params.id;
+      await request.save();
+      // const Patient = await db.Patients.findOne({
+      //   where: { id: request.patientId },
+      // });
+      // console.log(Patient);
+      // sendNotification(Patient.NotifToken);
+
+      res.status(201).json(request);
+    } catch (err) {
+      console.log(err);
+      res.status(501).json(err);
+    }
+  },
   findAllDoctorRequestsOfOneUser: async (req, res) => {
     try {
       const filter = {
         patientId: req.body.id,
-        status: "Doctor"
+        status: "Doctor",
       };
 
       const requestOfPatient = await db.requests.findAll({
@@ -156,19 +156,20 @@ module.exports = {
         include: [
           { model: db.Doctors, attributes: ["firstName", "lastName"] },
         ],
-      });
+      })
+      console.log(requestOfPatient);
 
-      res.status(222).json(requestOfPatient);
+      return res.status(222).json(requestOfPatient);
     } catch (error) {
       console.log(error);
-      res.status(530).send("you have error");
+      return res.status(530).json("you have error");
     }
   },
   findAllHCERequestsOfOneUser: async (req, res) => {
     try {
       const filter = {
         patientId: req.body.id,
-        Status : "HCE"
+        status: "HCE",
       };
 
       const requestOfPatient = await db.requests.findAll({
@@ -177,12 +178,12 @@ module.exports = {
           { model: db.Hce, attributes: ["name"] },
           { model: db.Doctors, attributes: ["firstName", "lastName"] },
         ],
-      });
+      })
 
-      res.status(222).json(requestOfPatient);
+     return res.status(222).json(requestOfPatient);
     } catch (error) {
       console.log(error);
-      res.status(530).send("you have error");
+      return res.status(530).json(error);
     }
   },
   takeInCharge: async (req, res) => {
@@ -192,11 +193,11 @@ module.exports = {
       });
       request.DoctorId = req.body.doctorId;
       await request.save();
-      // const Patient = await db.Patients.findOne({
-      //   where: { id: request.patientId },
-      // });
-      // console.log(Patient);
-      // sendNotification(Patient.NotifToken);
+      const Patient = await db.Patients.findOne({
+        where: { id: request.patientId },
+      });
+      console.log(Patient);
+      sendNotification(Patient.NotifToken);
 
       res.status(201).json(request);
     } catch (err) {
