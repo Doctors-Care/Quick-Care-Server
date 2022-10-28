@@ -22,7 +22,7 @@ module.exports.sendNotification =async (pushToken) => {
     sound: "default",
     title: "welcome! ",
     body: "welcome brooooooooooooooooooo",
-    icon:"../../../../icons8-sac-de-docteur-32.png",
+    icon: "../../../Quick-Care-Mobile/assets/urgence.png",
     color: "#077871",
   });
   let chunk = expo.chunkPushNotifications(message);
