@@ -3,7 +3,6 @@ const { sendConfirmationMail } = require("./nodemailer");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-const { sendNotification } = require("./Notification");
 
 //Controller related to users ressource for login And signUp.
 const db = require("../Database/index");
@@ -92,8 +91,7 @@ module.exports = {
           httpOnly: true,
           sameSite: "lax",
         });
-        sendNotification(Patient.NotifToken);
-        res.status(200).send({ message: "welcome back", Patient, token });
+       return res.status(200).send({ message: "welcome back", Patient, token });
       }
     } catch (error) {
       console.log(error);

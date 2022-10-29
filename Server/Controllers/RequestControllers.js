@@ -132,11 +132,10 @@ module.exports = {
       });
       request.hceId = req.params.id;
       await request.save();
-      // const Patient = await db.Patients.findOne({
-      //   where: { id: request.patientId },
-      // });
-      // console.log(Patient);
-      // sendNotification(Patient.NotifToken);
+      const Patient = await db.Patients.findOne({
+        where: { id: request.patientId },
+      });
+      sendNotification(Patient.NotifToken,1);
 
       res.status(201).json(request);
     } catch (err) {
@@ -197,7 +196,7 @@ module.exports = {
         where: { id: request.patientId },
       });
       console.log(Patient);
-      sendNotification(Patient.NotifToken);
+      sendNotification(Patient.NotifToken,2);
 
       res.status(201).json(request);
     } catch (err) {
