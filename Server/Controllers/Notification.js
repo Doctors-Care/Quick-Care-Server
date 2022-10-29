@@ -11,20 +11,36 @@ const { Expo } = require("expo-server-sdk");
   let expo = new Expo({
     accessToken: "EVINP6Zq9o4ht6fICB3LN1zx8m8cJHKimVkVvjxt",
   });
-module.exports.sendNotification =async (pushToken) => {
+module.exports.sendNotification =async (pushToken,messageNumber) => {
   let message = [];
   if (!Expo.isExpoPushToken(pushToken)) {
     console.error(`Push token ${pushToken} is not a valid Expo push token`);
   }
   console.log("ahmed", pushToken);
+  if (messageNumber===1){
   message.push({
     to: pushToken,
     sound: "default",
-    title: "welcome! ",
-    body: "welcome brooooooooooooooooooo",
-    icon: "../../../Quick-Care-Mobile/assets/urgence.png",
+    title: "Quick Care! ",
+    body: "🚑 Your emergency request has been accepted 🚑",
+    icon: "../../../Quick-Care-Mobile/assets/emergency-vehicle-removebg-preview.png",
     color: "#077871",
   });
+}
+if (messageNumber===2){
+  message.push({
+    to: pushToken,
+    sound: "default",
+    title: "Quick Care ",
+    body: " 🩺 A doctor is coming to you 🩺",
+    icon: "../../../Quick-Care-Mobile/assets/emergency-vehicle-removebg-preview.png",
+    adaptiveIcon: {
+      "foregroundImage": "../../../Quick-Care-Mobile/assets/emergency-vehicle-removebg-preview.pn",
+      "backgroundColor": "#50dbb6"
+    },
+    color: "#077871",
+  });
+}
   let chunk = expo.chunkPushNotifications(message);
   let ticket = [];
   (async () => {
