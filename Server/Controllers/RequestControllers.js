@@ -231,4 +231,16 @@ module.exports = {
   //  }
 
   // }
+
+  getOneReq : async (req,res)=>{
+    try {
+      const request = await db.requests.findOne({
+        where: {id : req.body.id}
+      })
+      res.status(201).json(request);
+    } catch (error) {
+      console.log(error);
+      res.status(501).json(error);
+    }
+  }
 };
