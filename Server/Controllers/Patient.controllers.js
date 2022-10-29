@@ -72,14 +72,14 @@ module.exports = {
       };
       const Patient = await db.Patients.findOne({ where: filter });
       if (!Patient) {
-        res.status(401).send("user not found check your email");
+       return  res.status(401).send("user not found check your email");
       }
       const Valid = bcrypt.compareSync(req.body.password, Patient.password);
       if (!Valid) {
-        res.status(402).send("wrong password");
+         return res.status(402).send("wrong password");
       }
       if (Patient.confirmation == false) {
-        res.status(402).send("confirm your account");
+        return   res.status(402).send("confirm your account");
       } else {
         const exp = Date.now() + 1000 * 60 * 60 * 45588965;
         const token = jwt.sign(
