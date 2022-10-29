@@ -75,11 +75,11 @@ module.exports = {
         },
       });
       if (!doctorAuth) {
-        res.status(404).send({ message: "user not found" });
+       return  res.status(404).send({ message: "user not found" });
       }
       const Match = bcrypt.compareSync(doctor.password, doctorAuth.password);
       if (!Match) {
-        res.status(402).json({ message: "check the entries" });
+       return  res.status(402).json({ message: "check the entries" });
       } else {
         const exp = Date.now() + 1000*60*60 ;
     const token = jwt.sign({ sub:doctorAuth.id, exp }, process.env.SECRET_KEY);
@@ -89,11 +89,11 @@ module.exports = {
       sameSite: "lax"
     });
     const response = { message: "welcome Back", doctorAuth , token }
-         res.status(202).json(response);
+       return    res.status(202).json(response);
       }
     } catch (err) {
       console.log(err);
-      res.status(401).json("err");
+      return res.status(401).json("err");
     }
   },
 

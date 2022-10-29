@@ -16,25 +16,24 @@ const {
   getAllOKRequests,
   markAsDone,
   getAllOKDoneRequests,
+  getOneReq
 } = require("../Controllers/RequestControllers");
 router.get("/getAll/:id", findHceReq);
 router.get("/getAllActive", findActiveHceReq);
 router.put("/acceptrequest/:id", validationHce);
 router.post("/addingRequest", addRequest);
 router.post("/checkRequest", actifRequest);
-router.post(
-  "/getAllDocOfOnePatient",
-  findAllDoctorRequestsOfOneUser
-);
+router.post("/getAllDocOfOnePatient", findAllDoctorRequestsOfOneUser);
 router.post(
   "/getAllHceOfOnePatient",
 
-  findAllHCERequestsOfOneUser
+   findAllHCERequestsOfOneUser
 );
 router.get("/getAllRequests", requireAuhDoc, getAllRequests);
 router.put("/putDoctorId", requireAuhDoc, takeInCharge);
 router.get("/getAllOKRequests", requireAuhDoc, getAllOKRequests);
 router.get("/getAllOKDoneRequests", requireAuhDoc, getAllOKDoneRequests);
 router.put("/markasdone", requireAuhDoc, markAsDone);
+router.post("/getOneReq",getOneReq)
 
 module.exports = router;
