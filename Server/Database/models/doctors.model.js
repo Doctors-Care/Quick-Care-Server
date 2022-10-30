@@ -44,7 +44,10 @@ module.exports = (sequelize, DataTypes) => {
       confirmation :{
         type:DataTypes.BOOLEAN,
         defaultValue:false
-      }
+      },
+      activationCode: {
+        type: DataTypes.STRING,
+      },
     },
     {
       tableName: "Doctors",

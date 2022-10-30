@@ -91,11 +91,11 @@ module.exports = {
           httpOnly: true,
           sameSite: "lax",
         });
-       return res.status(200).send({ message: "welcome back", Patient, token });
+       return res.status(200).json({ message: "welcome back", Patient, token });
       }
     } catch (error) {
       console.log(error);
-      return res.status(400).send("Somthing went wrong");
+      return res.status(400).json("Somthing went wrong");
     }
   },
 

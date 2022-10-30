@@ -6,7 +6,7 @@ const requireAuhDoc = require('../Controllers/middleware');
 
 
 // // Require controller modules.
-const {addDoctor, loginDoc, getOneDoc,updateDocProfile,logout } = require('../Controllers/Doctors.controllers')
+const {addDoctor, loginDoc, getOneDoc,updateDocProfile,logout,verifyCode } = require('../Controllers/Doctors.controllers')
 
 
 // /// POSTS ROUTES ///
@@ -16,10 +16,11 @@ router.post('/addDoctor',addDoctor) ;
 // // post request for authentication.
 router.post("/loginDoc",loginDoc)
 // // put request for updating informations.
-router.put('/update',requireAuhDoc,updateDocProfile) ; 
+router.put('/update',updateDocProfile) ; 
 // // get request for fetching informations.
 router.post('/getOne',getOneDoc);
 
+router.post("/verify", verifyCode);
 
 router.get  ('/logout',logout) ;
 
