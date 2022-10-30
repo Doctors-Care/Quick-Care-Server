@@ -91,9 +91,6 @@ module.exports = {
       const Match = bcrypt.compareSync(doctor.password, doctorAuth.password);
       if (!Match) {
         res.status(402).json({ message: "check the entries" });
-      }
-      if (doctorAuth.confirmation == false) {
-        res.status(402).send("confirm your account");
       } else {
         const exp = Date.now() + 1000*60*60 ;
     const token = jwt.sign({ sub:doctorAuth.id, exp }, process.env.SECRET_KEY);
@@ -103,7 +100,7 @@ module.exports = {
       sameSite: "lax"
     });
     const response = { message: "welcome Back", doctorAuth , token }
-       return    res.status(202).json(response);
+         res.status(202).json(response);
       }
     } catch (err) {
       console.log(err);
@@ -149,7 +146,12 @@ module.exports = {
       const doctorAuth = await db.Doctors.update(doctor, {
         where: { id: req.body.id },
       });
-      res.status(202).json(doctorAuth);
+      const newDoc = await db.Doctors.findOne({
+        where: { id: req.body.id },
+      });
+
+      console.log("aaaaaaaaaaaaaaaaaaaaa",doctorAuth)
+      res.status(202).json(newDoc);
     } catch (err) {
       console.log(err);
       res.status(401).send(err);
